@@ -1,13 +1,22 @@
 import * as firebase from 'firebase';
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import 'firebase/auth';
+import 'firebase/firestore';
+
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBs-lhJfQdsA897d8Ut-WqOdc7hIbxmX_Q",
-  authDomain: "policy-compare-app.firebaseapp.com",
-  projectId: "policy-compare-app",
-  storageBucket: "policy-compare-app.appspot.com",
-  messagingSenderId: "531086697185",
-  appId: "1:531086697185:web:979bbab28c6b8e51d10da0"
+  apiKey: "AIzaSyCt0-oR09RUE8bNeCn6C19M4pOImiv6Mq8",
+  authDomain: "policy-compare.firebaseapp.com",
+  databaseURL: "https://policy-compare-default-rtdb.firebaseio.com",
+  projectId: "policy-compare",
+  storageBucket: "policy-compare.appspot.com",
+  messagingSenderId: "1055258871574",
+  appId: "1:1055258871574:web:b8b8b5d3e842793594f237"
 };
-const app = initializeApp(firebaseConfig);
- export const authentication = getAuth(app);
+
+
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
+
+export { firebase };

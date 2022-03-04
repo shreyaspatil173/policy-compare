@@ -1,14 +1,26 @@
 import React, { useState } from "react";
 import { CheckBox, Text, StyleSheet, View, ScrollView ,TextInput,TouchableOpacity,Picker} from "react-native";
+import { setHealthInsurance } from "../Firebase/services";
 import CheckBoxes from "./CheckBoxes";
 
 const HealthInsurance = () => {
     const [selectedValue, setSelectedValue] = useState("");
     const [age, setAge] = useState('');
     const [shouldShow, setShouldShow] = useState(true);
-    // const Submit = () => {
+    const Submit = () => {
+        if(selectedValue && age && shouldShow){
+            
+            setHealthInsurance({
+                city:selectedValue,
+                age:age,
+                insrue:shouldShow
+            });
+        }else{
+            console.log('slecte all')
+        }
         
-    // }
+
+    }
     return (
         <ScrollView>
             <View>
@@ -56,7 +68,7 @@ const HealthInsurance = () => {
             </View>
 
             <TouchableOpacity style={styles.buttonStyle}
-                    onPress={() => setShouldShow(!shouldShow)}
+                    onPress={() => Submit()}
 
                 >
                     <Text style={styles.buttonText}>Continue</Text>

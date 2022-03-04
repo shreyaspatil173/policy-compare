@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ScrollView, SafeAreaView } from "react-native";
+import { Alert } from "react-native-web";
+import { getBikeInsurance } from "../Firebase/services";
 
 const BikeInsuranceForm = ({ navigation }) => {
     const [number, setNumber] = useState('');
     const Submit = () => {
-        Alert.alert("helll");
-        navigation.navigate("Home")
+        if(number){
+
+            getBikeInsurance({bikeNumber:number});
+        }else{
+            console.log('enter bike number')
+        }
     }
     return (
         <SafeAreaView>

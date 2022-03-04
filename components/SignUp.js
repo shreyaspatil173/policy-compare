@@ -1,31 +1,52 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView,Picker } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { authentication } from "../Firebase/firebase-config";
+import { firebase } from "../Firebase/firebase-config";
 
 const SignUp = ({ navigation }) => {
     // const [name, setName] = useState('');
     // const [dob, setDob] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
 
-    // const [city, setCity] = useState('');
+    const [fullName, setFullName] = useState('');
     // const [mobilenumber, setMobileNumber] = useState('');
     // const [selectedValue, setSelectedValue] = useState('');
     // const [incomeValue, setIncomeValue] = useState('');
 
 const Register = () =>{
-    // createUserWithEmailAndPassword(authentication,email,password)
-    // .then((re) => {
-    //     console.log(re);
-    // })
-    // .catch((re) => {
-    //     console.log(re);
-    // })
-    navigation.push("Signin")
+    if (password !== confirmPassword) {
+        alert("Passwords don't match.")
+        return
+    }
+    firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((response) => {
+            const uid = response.user.uid
+            const data = {
+                id: uid,
+                email,
+                fullName,
+            };
+            const usersRef = firebase.firestore().collection('users')
+            usersRef
+                .doc(uid)
+                .set(data)
+                .then(() => {
+                    navigation.navigate('Home', {user: data})
+                })
+                .catch((error) => {
+                    alert(error)
+                });
+        })
+        .catch((error) => {
+            alert(error)
+    });
 }
+
     return (
         <SafeAreaView>
             <ScrollView>
@@ -47,7 +68,8 @@ const Register = () =>{
                         </Text>
                         <TextInput style={styles.inputStyle}
                             placeholder="Enter Your First Name"
-                
+                            value={fullName}
+                            onChangeText={text=>setFullName(text)}
                             autoCorrect={false}
                             keyboardType="default"
                         />
@@ -85,6 +107,19 @@ const Register = () =>{
                             placeholder="Enter Your Password"
                             value={password}
                             onChangeText={text=>setPassword(text)}
+                            autoCorrect={false}
+                            secureTextEntry={true}
+                            keyboardType="default"
+                        />
+                    </View>
+                    <View>
+                        <Text style={styles.lables}>
+                            Confirm Password
+                        </Text>
+                        <TextInput style={styles.inputStyle}
+                            placeholder="Enter Your Password"
+                            value={confirmPassword}
+                            onChangeText={text=>setConfirmPassword(text)}
                             autoCorrect={false}
                             secureTextEntry={true}
                             keyboardType="default"

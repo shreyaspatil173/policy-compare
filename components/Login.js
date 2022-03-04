@@ -1,39 +1,37 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Button } from "react-native";
-import { authentication } from "../Firebase/firebase-config";
-import { signInWithEmailAndPassword } from "firebase/auth";
-
+import { firebase } from "../Firebase/firebase-config";
+import {getDatabase} from '../Firebase/services'
 const Login = ({ navigation }) => {
     const [isSignedIn, setIsSignedIn] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
     const Submit = () => {
-        if (email === "shreyas@123" && password === "123456") {
-            Alert.alert("login sucessful");
-            navigation.push("Home")
-        } else {
-            Alert.alert("login unsucessful");
-            navigation.push("Signin")
-        }
-        navigation.push("Home")
-        // signInWithEmailAndPassword(authentication, email, password)
-        //     .then((re) => {
-        //         setIsSignedIn(true);
-        //     })
-        //     .catch((re) => {
-        //         console.log(re);
-        //     })
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((response) => {
+                const uid = response.user.uid
+                const usersRef = firebase.firestore().collection('users')
+                usersRef
+                    .doc(uid)
+                    .get()
+                    .then(firestoreDocument => {
+                        if (!firestoreDocument.exists) {
+                            alert("User does not exist anymore.")
+                            return;
+                        }
+                        const user = firestoreDocument.data()
+                        navigation.navigate('Home', {user})
+                    })
+                    .catch(error => {
+                        alert(error)
+                    });
+            })
+            .catch(error => {
+                alert(error)
+            })
     }
-
-       
-    // };
-    // const Signup = () => {
-    //     Alert.alert("login sucessful");
-    //      navigation.naviagate("Register")
-
-
-    // };
 
     return (
 
