@@ -1,10 +1,54 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity,SafeAreaView ,ScrollView,TextInput,Picker} from "react-native";
 import CheckBoxes from "./CheckBoxes";
-const FamilyInsurances = ()=>{
+import {setFamilyInsurance } from "../Firebase/services"
+
+const FamilyInsurances = ({navigation})=>{
     const [selectedValue, setSelectedValue] = useState("");
     const [age, setAge] = useState('');
     const [shouldShow, setShouldShow] = useState(true);
+    const [errorMsg, setErrorMsgr] = useState({});
+
+    const checkValidation = () => {
+        let isError = false;
+        let error = {};
+        if (selectedValue === '') {
+            error.selectedValue = "Select City";
+            isError = true;
+        }
+
+        if (age === '') {
+            error.age = "Enter Age";
+            isError = true;
+        }
+
+      
+
+        setErrorMsgr(error);
+        console.log("isError", isError)
+        return isError
+    }
+    const Submit = () => {
+        if (!checkValidation()) {
+        if(selectedValue && age && shouldShow){
+            
+            setFamilyInsurance({
+                city:selectedValue,
+                age:age,
+                insure:shouldShow
+            });
+            navigation.navigate('Activity', {
+                insuranceid: 'family-insurance',
+
+            });
+        }else{
+            console.log('slecte all')
+        }
+    }
+        
+
+    }
+
 return(
     <SafeAreaView>
         <ScrollView>
@@ -27,6 +71,7 @@ return(
                     autoCorrect={false}
                     keyboardType="default"
                 />
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.age && errorMsg.age}</Text>
             </View>
 
             <View>
@@ -38,8 +83,9 @@ return(
                     style={{ height: 30, width: 140,  }}
                     onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                 >
+                     <Picker.Item label="Select Value"  />
                     <Picker.Item label="Mumbai" value="Mumbai" />
-                    <Picker.Item label="New" value="Mumbai"/>
+                    <Picker.Item label="New Mumbai" value="New Mumbai"/>
                     <Picker.Item label="Delhi" value="Delhi" />
                     <Picker.Item label="New Delhi" value="New Delhi "/>
                     <Picker.Item label="Pune" value="Pune" />
@@ -49,10 +95,11 @@ return(
                     <Picker.Item label="Surat" value="Surat"/>
                     <Picker.Item label="Indore" value="Indore"/>
                 </Picker>
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.selectedValue && errorMsg.selectedValue}</Text>
             </View>
 
             <TouchableOpacity style={styles.buttonStyle}
-                     onPress={() => setShouldShow(!shouldShow)}
+                     onPress={() => Submit()}
                 >
                     <Text style={styles.buttonText}>Continue</Text>
                 </TouchableOpacity>
@@ -88,5 +135,9 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderColor: "#0010a1",
     },
+    errorMsg: {
+        color: "red",
+        marginLeft: 15,
+    }
 })
 export default FamilyInsurances

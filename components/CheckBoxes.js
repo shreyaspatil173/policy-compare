@@ -11,6 +11,13 @@ const CheckBoxes = () => {
   const [checkbox7, setCheckBox7] = useState(false);
   const [checkbox8, setCheckBox8] = useState(false);
 
+  const [checkbox, setCheckBox ] = useState({
+    self:false,
+    spouse:false,
+    son:false,
+  })
+
+
 
 
   return (
@@ -18,8 +25,8 @@ const CheckBoxes = () => {
     <View style={styles.container}>
       <View style={styles.checkboxContainer}>
         <CheckBox
-          value={checkbox1}
-          onValueChange={setCheckBox1}
+          value={checkbox.self}
+          onValueChange={(item) =>setCheckBox(item)}
           style={styles.checkbox}
         />
         <Text style={styles.label}> Self</Text>

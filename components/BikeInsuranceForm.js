@@ -1,16 +1,39 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity, TextInput, Image, ScrollView, SafeAreaView } from "react-native";
 import { Alert } from "react-native-web";
-import { getBikeInsurance } from "../Firebase/services";
+import { setBikeInsurance } from "../Firebase/services";
 
 const BikeInsuranceForm = ({ navigation }) => {
     const [number, setNumber] = useState('');
-    const Submit = () => {
-        if(number){
+    const [errorMsg, setErrorMsgr] = useState({});
 
-            getBikeInsurance({bikeNumber:number});
-        }else{
-            console.log('enter bike number')
+    const checkValidation = () => {
+
+        let isError = false;
+        let error = {};
+        if(number === '') {
+            error.number = "Enter Number";
+            isError = true;    
+        }
+        
+
+        setErrorMsgr(error);
+        console.log("isError",isError)
+        return isError
+    }
+
+    const Submit = () => {
+        if(!checkValidation()) {
+            if(number){
+    
+                setBikeInsurance({bikeNumber:number});
+                navigation.navigate('Activity', {
+                    insuranceid: 'hT8udth7IMt92KS8uTMt',
+                  
+                  });
+            }else{
+                console.log('enter bike number')
+            }
         }
     }
     return (
@@ -37,6 +60,7 @@ const BikeInsuranceForm = ({ navigation }) => {
                     autoCapitalize="none"
                     keyboardType="default"
                 />
+                  <Text style={styles.errorMsg}>{errorMsg && errorMsg.number   && errorMsg.number      }</Text>
 
                 <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => Submit()}
@@ -74,6 +98,10 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         margin: 10,
+    },
+    errorMsg : {
+        color:"red",
+        marginLeft:15,
     }
 })
 export default BikeInsuranceForm;

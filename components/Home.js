@@ -1,7 +1,35 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView ,SafeAreaView} from "react-native";
-
+import { firebase } from "../Firebase/firebase-config";
 const Home = ({navigation}) => {
+    const [name, setName] = useState('');
+
+    const getData=() =>{
+        const uid = localStorage.getItem("user_id");
+        const usersRef = firebase.firestore().collection('users')
+        usersRef
+            .doc(uid)
+            .get()
+            .then(firestoreDocument => {
+                if (!firestoreDocument.exists) {
+                    alert("User does not exist anymore.")
+                    return;
+                }
+                const user = firestoreDocument.data()
+                console.log("user",user)
+                setName(user.fullName)
+                
+            })
+            .catch(error => {
+                alert(error)
+            });
+    }
+
+    React.useEffect(() => {
+        getData()
+    },[])
+
+
     return (
         <SafeAreaView>
         <ScrollView>
@@ -11,11 +39,11 @@ const Home = ({navigation}) => {
                     <Image source={require('../assets/images/bell-icon.png')}style={{ width:30,height:30, position: 'absolute',top: 10, bottom: 0, left: 300, right: 0,}}/>
                 </TouchableOpacity>
 
-                <TouchableOpacity>
-                    <Image source={require('../assets/images/call-back.png')}style={{width:30,height:30,position: 'absolute',top: 10, bottom: 0, left: 260, right: 0, }}/>
+                <TouchableOpacity onPress={() =>navigation.navigate("Profile")}>
+                    <Image source={require('../assets/images/profile.png')}style={{width:30,height:30,position: 'absolute',top: 10, bottom: 0, left: 260, right: 0, }}/>
                 </TouchableOpacity>
             </View>
-            <Text style={{ fontSize: 30, marginLeft: 10, marginTop: 5 }}>Hello, Shreyas </Text>
+            <Text style={{ fontSize: 30, marginLeft: 10, marginTop: 5 }}>Hello, {name} </Text>
             <Text style={{ color: "#969696", marginLeft: 10 }}>Welcome back </Text>
             <View style={styles.viewRow}>
                 <TouchableOpacity style={{ backgroundColor: "#ffd6d6", borderRadius: 10, padding: 8, margin: 4 }}>

@@ -25,6 +25,7 @@ import CheckBoxes from "./components/CheckBoxes";
 import FamilyInsurances from "./components/FamilyInsurances";
 import Profile from "./components/profile";
 import Forgot from "./components/Forgot";
+import MyActivity from "./components/MyActivity";
 // import { authentication } from "./Firebase/firebase-config";
 
 
@@ -58,8 +59,10 @@ const App = () => {
         <Stack.Screen name="Healthinsurance" component={HealthInsurance} options={{ title: 'Health Inusrance' }}/>
         <Stack.Screen name="CheckBox" component={CheckBoxes} />
         <Stack.Screen name="Familyinsurance" component={FamilyInsurances} options={{ title: 'Family Insurance' }}/>
-        <Stack.Screen name="View Profile" component={Profile} options={{ title: 'Profile' }}/>
+        <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }}/>
         <Stack.Screen name="Forgotpassword" component={Forgot} options={{ title: 'Forgot Password' }}/>
+        <Stack.Screen name="Activity" component={MyActivity} options={{ title: 'Quotes' }}/>
+
       
       </Stack.Navigator>
     </NavigationContainer>

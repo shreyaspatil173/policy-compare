@@ -2,16 +2,64 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Picker, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import SwitchCode from "./SwitchCode";
+import { SetTermInsurance } from "../Firebase/services";
+import {validDate} from "../Helper/Validation"
 
 
-const TermInsuranceForm = () => {
+const TermInsuranceForm = ({navigation}) => {
+    const [name, setName] = useState('');    
+    const [dob, setDob] = useState('');
+    const [selectedValue, setSelectedValue] = useState('');
+    const [errorMsg, setErrorMsgr] = useState({});
+
+    const checkValidation = () => {
+
+        let isError = false;
+        let error = {};
+        if(name === '') {
+            error.name = "Enter Name";
+            isError = true;    
+        }
+
+        if(selectedValue === '') {
+            error.selectedValue = "Select Gender";
+            isError = true;    
+        }
+
+        if(dob === '') {
+            error.dob = "Enter Date Of Birth";
+            isError = true;    
+        }
+        if(dob && !validDate(dob)) {
+            error.dob = "Enter valid Date Of Birth";
+            isError = true;    
+        }
+
+        setErrorMsgr(error);
+        console.log("isError",isError)
+        return isError
+    }
+
 
     const Submit = () => {
-        Alert.alert(" helll");
+        if(!checkValidation()) {
+       if(name && dob && selectedValue){
+            SetTermInsurance({
+                name:name,
+                dob:dob,
+                gender:selectedValue
+            })
+            navigation.navigate('Activity', {
+                insuranceid: 'term-insurance',
+              
+              });
+       }else{
+        console.log('unsucess')
+       }
+    }
     }
     
-const [name, setName] = useState('');    const [dob, setDob] = useState('');
-    const [selectedValue, setSelectedValue] = useState('');
+
     return (
         <SafeAreaView>
         <ScrollView>
@@ -37,9 +85,11 @@ const [name, setName] = useState('');    const [dob, setDob] = useState('');
                 style={{ height: 30, width: 140, marginLeft: 15, marginTop: 10 }}
                 onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
             >
+                <Picker.Item label="Select Value" />
                 <Picker.Item label="Male" value="Male" />
                 <Picker.Item label="Female" value="Female" />
             </Picker>
+            <Text style={styles.errorMsg}>{errorMsg && errorMsg.selectedValue   && errorMsg.selectedValue      }</Text>
             <View style={styles.viewField}>
                 <Text style={styles.lables}>
                     Enter Your Name
@@ -51,6 +101,7 @@ const [name, setName] = useState('');    const [dob, setDob] = useState('');
                     autoCorrect={false}
                     keyboardType="default"
                 />
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.name   && errorMsg.name      }</Text>
                 <Text style={styles.lables}>
                     Date of Birth (DD-MM-YYYY)
                 </Text>
@@ -60,8 +111,8 @@ const [name, setName] = useState('');    const [dob, setDob] = useState('');
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="default"
-                    
                 />
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.dob   && errorMsg.dob      }</Text>
                 
                 <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => Submit()}
@@ -109,6 +160,10 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         fontSize: 17,
     },
+    errorMsg : {
+        color:"red",
+        marginLeft:15,
+    }
 
 });
 

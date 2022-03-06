@@ -1,13 +1,48 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Picker, Image, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { setTaxSavingPlans } from "../Firebase/services";
 import SwitchCode from "./SwitchCode";
 
-const TaxSaving = () => {
+const TaxSaving = ({navigation}) => {
     const [name, setName] = useState('');
     const [selectedValue, setSelectedValue] = useState('');
+    const [errorMsg, setErrorMsgr] = useState({});
+
+    const checkValidation = () => {
+
+        let isError = false;
+        let error = {};
+        if (name === '') {
+            error.name = "Enter Name";
+            isError = true;
+        }
+
+        if (selectedValue === '') {
+            error.selectedValue = "Select Gender";
+            isError = true;
+        }
+
+       
+        setErrorMsgr(error);
+        console.log("isError", isError)
+        return isError
+    }
     const Submit = () => {
-        Alert.alert(" helll");
+        if (!checkValidation()) {
+        if (name && selectedValue) {
+            setTaxSavingPlans({
+                name: name,
+                gender: selectedValue
+            })
+            navigation.navigate('Activity', {
+                insuranceid: 'tax-saving-plan',
+              });
+        }else{
+            console.log("nothinh to show");
+        }
+    }
+    
     }
     return (
         <SafeAreaView>
@@ -29,10 +64,11 @@ const TaxSaving = () => {
                         style={{ height: 30, width: 140, marginLeft: 15, marginTop: 10 }}
                         onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                     >
-
+                        <Picker.Item label="Select Value" />
                         <Picker.Item label="Male" value="Male" />
                         <Picker.Item label="Female" value="Female" />
                     </Picker>
+                    <Text style={styles.errorMsg}>{errorMsg && errorMsg.selectedValue && errorMsg.selectedValue}</Text>
                     <View style={styles.viewField}>
                         <Text style={styles.lables}>
                             Enter Your Name
@@ -44,6 +80,7 @@ const TaxSaving = () => {
                             autoCorrect={false}
                             keyboardType="default"
                         />
+                        <Text style={styles.errorMsg}>{errorMsg && errorMsg.name && errorMsg.name}</Text>
                         <TouchableOpacity style={styles.buttonStyle}
                             onPress={() => Submit()}
                         >
@@ -89,6 +126,10 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         fontSize: 17,
     },
+    errorMsg: {
+        color: "red",
+        marginLeft: 15,
+    }
 })
 
 export default TaxSaving;

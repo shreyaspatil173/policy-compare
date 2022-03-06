@@ -3,22 +3,47 @@ import { CheckBox, Text, StyleSheet, View, ScrollView ,TextInput,TouchableOpacit
 import { setHealthInsurance } from "../Firebase/services";
 import CheckBoxes from "./CheckBoxes";
 
-const HealthInsurance = () => {
+const HealthInsurance = ({navigation}) => {
     const [selectedValue, setSelectedValue] = useState("");
     const [age, setAge] = useState('');
     const [shouldShow, setShouldShow] = useState(true);
+    const [errorMsg, setErrorMsgr] = useState({});
+
+    const checkValidation = () => {
+        let isError = false;
+        let error = {};
+        if (selectedValue === '') {
+            error.selectedValue = "Select City";
+            isError = true;
+        }
+
+        if (age === '') {
+            error.age = "Enter Age";
+            isError = true;
+        }
+
+    
+        setErrorMsgr(error);
+        console.log("isError", isError)
+        return isError
+    }
+
     const Submit = () => {
+        if (!checkValidation()) {
         if(selectedValue && age && shouldShow){
             
             setHealthInsurance({
                 city:selectedValue,
                 age:age,
-                insrue:shouldShow
+                insure:shouldShow
             });
+            navigation.navigate('Activity', {
+                insuranceid: 'health-insurance',
+              });
         }else{
             console.log('slecte all')
         }
-        
+    }
 
     }
     return (
@@ -31,7 +56,7 @@ const HealthInsurance = () => {
             </View>
 
             <View>
-            <Text style={{ fontSize: 15, margin: 15 ,fontWeight: "bold",}}>How old is each member? </Text>
+            <Text style={{ fontSize: 15, margin: 10 ,fontWeight: "bold",}}>How old is each member? </Text>
             <Text style={styles.lables}>
                     Your Age
                 </Text>
@@ -43,17 +68,19 @@ const HealthInsurance = () => {
                     autoCorrect={false}
                     keyboardType="default"
                 />
+                  <Text style={styles.errorMsg}>{errorMsg && errorMsg.age && errorMsg.age}</Text>
             </View>
 
             <View>
-            <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>Where do you live?</Text>
-            <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>Slect Yor City</Text>
+            <Text style={{ fontSize: 15, margin: 10, fontWeight: "bold", }}>Where do you live?</Text>
+            <Text style={{ fontSize: 15, margin: 10, fontWeight: "bold", }}>Slect Yor City</Text>
 
             <Picker
                     selectedValue={selectedValue}
-                    style={{ height: 30, width: 140,  }}
+                    style={{ height: 30, width: 140, marginLeft:15  }}
                     onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                 >
+                    <Picker.Item label="Select Value" />
                     <Picker.Item label="Mumbai" value="Mumbai" />
                     <Picker.Item label="New Mumbai" value="New Mumbai"/>
                     <Picker.Item label="Delhi" value="Delhi" />
@@ -65,6 +92,7 @@ const HealthInsurance = () => {
                     <Picker.Item label="Surat" value="Surat"/>
                     <Picker.Item label="Indore" value="Indore"/>
                 </Picker>
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.selectedValue && errorMsg.selectedValue}</Text>
             </View>
 
             <TouchableOpacity style={styles.buttonStyle}
@@ -86,6 +114,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 15,
+        marginBottom:10
     },
     buttonText: {
         color: "#ffffff",
@@ -95,6 +124,7 @@ const styles = StyleSheet.create({
         height: 40,
         paddingTop: 15,
         color: "#000000",
+        margin:10
 
     },
     inputStyle: {
@@ -102,7 +132,13 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#0010a1",
+        margin:10,
+        
     },
+    errorMsg: {
+        color: "red",
+        marginLeft: 15,
+    }
 })
 
 export default HealthInsurance;

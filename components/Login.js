@@ -1,36 +1,77 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Button } from "react-native";
 import { firebase } from "../Firebase/firebase-config";
-import {getDatabase} from '../Firebase/services'
+import { getTaxSavingPlans,getById } from "../Firebase/services";
+import {validEmail} from "../Helper/Validation"
+
+
 const Login = ({ navigation }) => {
     const [isSignedIn, setIsSignedIn] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsgr] = useState({});
+    const checkValidation = () => {
+        let isError = false;
+        let error = {};
+        if(email === '') {
+            error.email = "Enter email";
+            isError = true;    
+        }
+        if(email && !validEmail(email)) { 
+            error.email = "Enter valid email";
+            isError = true;  
+         }
+
+        if(password === '') {
+            error.password = "Enter Password";
+            isError = true;    
+        }
+        
+
+
+        setErrorMsgr(error);
+        console.log("isError",isError)
+        return isError
+    }
+
     const Submit = () => {
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
-            .then((response) => {
-                const uid = response.user.uid
-                const usersRef = firebase.firestore().collection('users')
-                usersRef
-                    .doc(uid)
-                    .get()
-                    .then(firestoreDocument => {
-                        if (!firestoreDocument.exists) {
-                            alert("User does not exist anymore.")
-                            return;
-                        }
-                        const user = firestoreDocument.data()
-                        navigation.navigate('Home', {user})
-                    })
-                    .catch(error => {
-                        alert(error)
-                    });
-            })
-            .catch(error => {
-                alert(error)
-            })
+
+        
+       getById("tax-saving-plan","WdaCku41hRAEbupMtI0I").then((item)=>{
+     console.log(item.data()) ;
+    
+      })
+      if(!checkValidation()) {
+
+          firebase
+              .auth()
+              .signInWithEmailAndPassword(email, password)
+              .then((response) => {
+                  const uid = response.user.uid
+                  
+                  const usersRef = firebase.firestore().collection('users')
+                  usersRef
+                      .doc(uid)
+                      .get()
+                      .then(firestoreDocument => {
+                          console.log("firestoreDocument",firestoreDocument)
+                          if (!firestoreDocument.exists) {
+                              alert("User does not exist anymore.")
+                              return;
+                          }
+                          const user = firestoreDocument.data()
+                          navigation.navigate('Home', {user})
+                      })
+                      .catch(error => {
+                          alert(error)
+                      });
+              })
+              .catch(error => {
+                  alert(error)
+              })
+      }
+      
+
     }
 
     return (
@@ -50,6 +91,7 @@ const Login = ({ navigation }) => {
                     autoCorrect={false}
                     keyboardType="default"
                 />
+                 <Text style={styles.errorMsg}>{errorMsg && errorMsg.email   && errorMsg.email      }</Text>
             </View>
 
             <View>
@@ -65,6 +107,7 @@ const Login = ({ navigation }) => {
                     secureTextEntry={true}
                     keyboardType="default"
                 />
+                 <Text style={styles.errorMsg}>{errorMsg && errorMsg.password && errorMsg.password  }</Text>
             </View>
 
             <View>
@@ -80,11 +123,11 @@ const Login = ({ navigation }) => {
                 >
                     <Text style={styles.buttonText}>SignUp</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttonStyle1}
+                {/* <TouchableOpacity style={styles.buttonStyle1}
                     onPress={() => navigation.push("Forgotpassword")}
                 >
                     <Text style={{ color: "blue" }}>Forgot Password?</Text>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
 
             </View>
@@ -155,6 +198,8 @@ const styles = StyleSheet.create({
         marginLeft: "65%",
         color: "#0010a1",
     },
-
+    errorMsg : {
+        color:"red"
+    }
 });
 export default Login;

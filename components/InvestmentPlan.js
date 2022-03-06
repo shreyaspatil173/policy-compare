@@ -1,20 +1,55 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Picker, Image } from "react-native";
+import { SetInvestementPlans } from "../Firebase/services";
 import SwitchCode from "./SwitchCode";
 
-const InvestmentPlan = () => {
+const InvestmentPlan = ({navigation}) => {
     const [name, setName] = useState('');
-    const [dob, setDob] = useState('');
-    const [selectedValue, setSelectedValue] = useState('');
+    const [city, setCity] = useState('');
+    const [errorMsg, setErrorMsgr] = useState({});
+
+    const checkValidation = () => {
+
+        let isError = false;
+        let error = {};
+        if(name === '') {
+            error.name = "Enter Name";
+            isError = true;    
+        }
+
+        if(city === '') {
+            error.city = "Select City";
+            isError = true;    
+        }
+
+
+        setErrorMsgr(error);
+        console.log("isError",isError)
+        return isError
+    }
+
     const Submit = () => {
-        Alert.alert(" helll");
+        if(!checkValidation()) {
+        if (name && city) {
+            SetInvestementPlans({
+                name:name,
+                city:city
+            })
+            navigation.navigate('Activity', {
+                insuranceid: 'investement-plan',
+              
+              });
+        } else {
+            console.log("hii")
+        }
+    }
     }
     return (
         <View>
             <Text style={{ margin: 10, fontSize: 20 }}>Grow your wealth</Text>
             <Text style={{ margin: 10, }}>Best plans with high returns avaliable on one platform</Text>
 
-            <View style={styles.viewRow }>
+            <View style={styles.viewRow}>
                 <Image source={require('../assets/images/ruppes.png')} style={{ width: 25, height: 25, marginLeft: 10 }} />
                 <Text style={{ fontSize: 20, color: "#25fa00", marginLeft: 10 }}> Invest ₹ 10k/month & Gets {'\n'}₹ 1 Crore Tax Free on Maturity</Text>
             </View>
@@ -23,14 +58,15 @@ const InvestmentPlan = () => {
             <Text style={{ fontSize: 15, color: "#0a00f7", marginLeft: 15 }}>Select Your Gender :-</Text>
 
             <Picker
-                selectedValue={selectedValue}
+                selectedValue={city}
                 style={{ height: 30, width: 140, marginLeft: 15, marginTop: 10 }}
-                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                onValueChange={(itemValue, itemIndex) => setCity(itemValue)}
             >
-
+                <Picker.Item label="Select Value" />
                 <Picker.Item label="Male" value="Male" />
                 <Picker.Item label="Female" value="Female" />
             </Picker>
+            <Text style={styles.errorMsg}>{errorMsg && errorMsg.city   && errorMsg.city}</Text>
             <View style={styles.viewField}>
                 <Text style={styles.lables}>
                     Enter Your Name
@@ -42,13 +78,14 @@ const InvestmentPlan = () => {
                     autoCorrect={false}
                     keyboardType="default"
                 />
-                 <TouchableOpacity style={styles.buttonStyle}
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.name   && errorMsg.name      }</Text>
+                <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => Submit()}
                 >
                     <Text style={styles.buttonText}>View free quotes</Text>
                 </TouchableOpacity>
             </View>
-            <SwitchCode/>
+            <SwitchCode />
         </View>
     )
 
@@ -85,6 +122,10 @@ const styles = StyleSheet.create({
         color: "#ffffff",
         fontSize: 17,
     },
+    errorMsg : {
+        color:"red",
+        marginLeft:15,
+    }
 })
 
 export default InvestmentPlan;

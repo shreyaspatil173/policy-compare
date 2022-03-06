@@ -1,21 +1,78 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView, Image, Picker } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
-const Profile = () => {
+import { firebase } from "../Firebase/firebase-config";
+// import { Link } from 'react-router';
+const Profile = ({navigation}) => {
     const [name, setName] = useState('');
     const [dob, setDob] = useState('');
     const [email, setEmail] = useState('');
+    const [oldemail, setOldEmail] = useState('');
     const [city, setCity] = useState('');
     const [mobilenumber, setMobileNumber] = useState('');
     const [selectedValue, setSelectedValue] = useState('');
     const [incomeValue, setIncomeValue] = useState('');
+    const [password, setPassword] = useState('');
 
+
+    const getData=() =>{
+        const uid = localStorage.getItem("user_id");
+        const usersRef = firebase.firestore().collection('users')
+        usersRef
+            .doc(uid)
+            .get()
+            .then(firestoreDocument => {
+                if (!firestoreDocument.exists) {
+                    alert("User does not exist anymore.")
+                    return;
+                }
+                const user = firestoreDocument.data()
+                console.log("user",user)
+                setName(user.fullName)
+                setDob(user.dob)
+                setEmail(user.email)
+                setOldEmail(user.email)
+                setCity(user.city)
+                setMobileNumber(user.mobilenumber)
+                setSelectedValue(user.gender)
+                setIncomeValue(user.income)
+                setPassword(user.password ?  user.password  : '')
+            })
+            .catch(error => {
+                alert(error)
+            });
+    }
+
+    React.useEffect(() => {
+        getData()
+    },[])
     const Edit = () => {
-       
-    };
+    }
     const Update = () => {
-       
+
+        const uid = localStorage.getItem("user_id");
+
+        firebase.auth()
+        .signInWithEmailAndPassword(oldemail, password)
+        .then(function(userCredential) {
+            userCredential.user.updateEmail(email)
+            const usersRef = firebase.firestore().collection('users')      
+            const data = {
+                fullName:name,
+                dob : dob,
+                email:email,
+                city:city,
+                mobilenumber:mobilenumber,
+                gender:selectedValue,
+                income:incomeValue,
+    
+            }
+            console.log("data",data)
+            usersRef.doc(uid).update(data)
+            getData() 
+            Alert.alert("succesfully updated");
+            // Link.openURL(`whatsapp://send?text=hello&phone=${mobilenumber}`)
+        })
     };
 
     
@@ -27,7 +84,10 @@ const Profile = () => {
     const Acitivity = () => {
        
     };
-
+   
+    const Logout = () => {
+        navigation.navigate("Profile");
+    };
     
    
     
@@ -38,6 +98,7 @@ const Profile = () => {
             <ScrollView style={styles.maincontainer}>
                 <View>
                     <Image source={require('../assets/images/profile.png')} style={{ width: 45, height: 45, margin: "auto",justifyContent:"center",alignItems:"center",alignContent:"center", marginTop: 20 }} />
+                    
                 </View>
 
                 <View style={{ margin: "auto" }}>
@@ -147,9 +208,14 @@ const Profile = () => {
 
 
                         <TouchableOpacity style={styles.buttonStyle3}
-                            onPress={() => Acitivity()}
+                            onPress={() =>navigation.navigate("Activity")}
                         >
                             <Text style={styles.buttonText}>My Acitivity</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.buttonStyle1}
+                            onPress={() => Logout()}
+                        >
+                            <Text style={styles.buttonText}>Sign Out </Text>
                         </TouchableOpacity>
 
             </ScrollView>
