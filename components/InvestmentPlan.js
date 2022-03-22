@@ -18,7 +18,7 @@ const InvestmentPlan = ({navigation}) => {
         }
 
         if(city === '') {
-            error.city = "Select City";
+            error.city = "Select Gender";
             isError = true;    
         }
 
@@ -45,7 +45,7 @@ const InvestmentPlan = ({navigation}) => {
     }
     }
     return (
-        <View>
+        <View >
             <Text style={{ margin: 10, fontSize: 20 }}>Grow your wealth</Text>
             <Text style={{ margin: 10, }}>Best plans with high returns avaliable on one platform</Text>
 
@@ -77,12 +77,13 @@ const InvestmentPlan = ({navigation}) => {
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="default"
+                    placeholder="Enter Your Name"
                 />
                 <Text style={styles.errorMsg}>{errorMsg && errorMsg.name   && errorMsg.name      }</Text>
                 <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => Submit()}
                 >
-                    <Text style={styles.buttonText}>View free quotes</Text>
+                    <Text style={styles.buttonText}>View Free Quotes</Text>
                 </TouchableOpacity>
             </View>
             <SwitchCode />
@@ -102,18 +103,20 @@ const styles = StyleSheet.create({
         height: 40,
         paddingTop: 15,
         color: "#000000",
+        marginLeft:10
     },
     inputStyle: {
         padding: 5,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#0010a1",
+        marginLeft:10
     },
     buttonStyle: {
         backgroundColor: "#000000",
         borderRadius: 5,
-        margin: 15,
-        padding: 15,
+        marginLeft:10,
+        padding: 10,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 15,

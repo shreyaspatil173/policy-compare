@@ -194,11 +194,7 @@ const Profile = ({navigation}) => {
                         </Picker>
                     </View>
 
-                    <TouchableOpacity style={styles.buttonStyle1}
-                            onPress={() => Edit()}
-                        >
-                            <Text style={styles.buttonText}>Edit</Text>
-                        </TouchableOpacity>
+                    
 
                         <TouchableOpacity style={styles.buttonStyle2}
                             onPress={() => Update()}
@@ -207,13 +203,8 @@ const Profile = ({navigation}) => {
                         </TouchableOpacity>
 
 
-                        <TouchableOpacity style={styles.buttonStyle3}
-                            onPress={() =>navigation.navigate("Activity")}
-                        >
-                            <Text style={styles.buttonText}>My Acitivity</Text>
-                        </TouchableOpacity>
                         <TouchableOpacity style={styles.buttonStyle1}
-                            onPress={() => Logout()}
+                             onPress={() =>navigation.navigate("Signin")}
                         >
                             <Text style={styles.buttonText}>Sign Out </Text>
                         </TouchableOpacity>

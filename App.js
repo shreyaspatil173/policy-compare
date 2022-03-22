@@ -3,7 +3,6 @@ import React from "react";
 import {  StyleSheet } from "react-native";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Categories from "./components/Categories";
@@ -21,19 +20,11 @@ import TaxSaving from "./components/TaxSaving";
 import TravelInsurance from "./components/TravelInsurance";
 import DatePick from "./components/DatePick";
 import HealthInsurance from "./components/HealthInsurance";
-import CheckBoxes from "./components/CheckBoxes";
 import FamilyInsurances from "./components/FamilyInsurances";
 import Profile from "./components/profile";
 import Forgot from "./components/Forgot";
 import MyActivity from "./components/MyActivity";
 // import { authentication } from "./Firebase/firebase-config";
-
-
-
-
-
-
-
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -56,13 +47,12 @@ const App = () => {
         <Stack.Screen name="TaxSavingInvestement" component={TaxSaving}options={{ title: 'Tax Saving Investement' }} />
         <Stack.Screen name="TravelInsurance" component={TravelInsurance}options={{ title: 'Travel Insurance' }} />
         <Stack.Screen name="Date Picker" component={DatePick} />
-        <Stack.Screen name="Healthinsurance" component={HealthInsurance} options={{ title: 'Health Inusrance' }}/>
-        <Stack.Screen name="CheckBox" component={CheckBoxes} />
+        <Stack.Screen name="healthinsurance" component={HealthInsurance} options={{ title: 'Health Inusrance' }}/>
         <Stack.Screen name="Familyinsurance" component={FamilyInsurances} options={{ title: 'Family Insurance' }}/>
         <Stack.Screen name="Profile" component={Profile} options={{ title: 'Profile' }}/>
         <Stack.Screen name="Forgotpassword" component={Forgot} options={{ title: 'Forgot Password' }}/>
         <Stack.Screen name="Activity" component={MyActivity} options={{ title: 'Quotes' }}/>
-
+        
       
       </Stack.Navigator>
     </NavigationContainer>

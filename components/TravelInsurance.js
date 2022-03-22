@@ -31,7 +31,7 @@ const TravelInsurance = ({navigation}) => {
         }
 
         if (people === '') {
-            error.people = "Selct People ";
+            error.people = "Select People ";
             isError = true;
         }
 
@@ -59,7 +59,6 @@ const TravelInsurance = ({navigation}) => {
             }
         }
     }
-
 
     return (
         <SafeAreaView>
@@ -89,7 +88,7 @@ const TravelInsurance = ({navigation}) => {
                 </View>
 
                 <View>
-                    <Text style={{ fontSize: 20, margin: 15, fontWeight: "bold", }}>When are you travelling to {"\n"} United Arab</Text>
+                    
                     <Text style={{ fontSize: 15, margin: 15 }}>Don't worry you can change your trip dates {"\n"} a later state</Text>
                     {/* <DatePick /> */}
                 </View>
@@ -104,6 +103,7 @@ const TravelInsurance = ({navigation}) => {
                         autoCapitalize="none"
                         autoCorrect={false}
                         keyboardType="default"
+                        placeholder="(DD-MM-YYYY)"
                     />
                     <Text style={styles.errorMsg}>{errorMsg && errorMsg.startDate && errorMsg.startDate}</Text>
 
@@ -116,6 +116,7 @@ const TravelInsurance = ({navigation}) => {
                         autoCapitalize="none"
                         autoCorrect={false}
                         keyboardType="default"
+                        placeholder="(DD-MM-YYYY)"
                     />
                     <Text style={styles.errorMsg}>{errorMsg && errorMsg.endDate && errorMsg.endDate}</Text>
                 </View>

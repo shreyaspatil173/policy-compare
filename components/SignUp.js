@@ -81,8 +81,6 @@ const SignUp = ({ navigation }) => {
             error.income= "Select Income";
             isError = true;    
         }
-
-
         setErrorMsgr(error);
         console.log("isError",isError)
         return isError
@@ -132,10 +130,8 @@ const handleChangeGender = () => {
     return (
         <SafeAreaView>
             <ScrollView>
-
-
                 <View style={styles.maincontainer}>
-                    <Text style={styles.mainheader}> SignUp Form </Text>
+                    <Text style={styles.mainheader}> SignUp </Text>
 
                     <View>
                     <Text style={{ fontSize: 15,  marginTop: 10, marginLeft: 15 }}>Select Your Gender :-</Text>
@@ -209,7 +205,7 @@ const handleChangeGender = () => {
                     </View>
                     <View>
                         <Text style={styles.lables}>
-                            Date of birth(DD-MM-YY)
+                            Date Of Birth(DD-MM-YY)
                         </Text>
                         <TextInput style={styles.inputStyle}
                         value={dob}
@@ -249,12 +245,13 @@ const handleChangeGender = () => {
                     </View>
 
                     <View>
-                    <Text style={{ fontSize: 15, marginLeft: 15 }}>Annual income :-</Text>
+                    <Text style={{ fontSize: 15, marginLeft: 15 }}>Annual Income :-</Text>
                         <Picker
                         selectedValue={income}
                         onValueChange={(itemValue, itemIndex) => setIncome(itemValue)}
                             style={{ height: 30, width: 140, marginLeft: 15, marginTop: 10 }}
                         >
+                            <Picker.Item label="Select Income"  />
                             <Picker.Item label="upto 3 lakhs" value="upto 3 lakhs" />
                             <Picker.Item label="3 - 5 lakhs" value="3 - 5 lakhs" />
                             <Picker.Item label="5 - 7 lakhs" value="5 - 7 lakhs"/>
@@ -268,13 +265,12 @@ const handleChangeGender = () => {
                         <TouchableOpacity style={styles.buttonStyle}
                             onPress={() => Register()}
                         >
-                            <Text style={styles.buttonText}>Submit</Text>
+                            <Text style={styles.buttonText}>Register</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
         </SafeAreaView>
-
 
     );
 };
@@ -291,12 +287,10 @@ const styles = StyleSheet.create({
         fontSize: 30,
         color: "#000000",
         fontFamily: "bold"
-
     },
     lables: {
         height: 40,
         paddingTop: 15,
-
         color: "#000000",
 
     },
@@ -310,14 +304,12 @@ const styles = StyleSheet.create({
     buttonStyle: {
         backgroundColor: "#000000",
         borderRadius: 5,
-        margin: "auto",
         paddingTop: 5,
         paddingBottom: 5,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 15,
-
-
+        marginBottom:15,
     },
     buttonText: {
         color: "#ffffff",

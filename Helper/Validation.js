@@ -1,4 +1,4 @@
-
+ 
 export function validPhone(value) {
     let reg =  /^[5-9]\d{9}$/
     return reg.test(value)

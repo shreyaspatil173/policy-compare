@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Button } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableOpacity,Image} from "react-native";
+import { Alert } from "react-native-web";
 import { firebase } from "../Firebase/firebase-config";
-import { getTaxSavingPlans,getById } from "../Firebase/services";
-import {validEmail} from "../Helper/Validation"
-
+import { getTaxSavingPlans, getById } from "../Firebase/services";
+import { validEmail } from "../Helper/Validation"
 
 const Login = ({ navigation }) => {
     const [isSignedIn, setIsSignedIn] = useState('');
@@ -13,74 +13,71 @@ const Login = ({ navigation }) => {
     const checkValidation = () => {
         let isError = false;
         let error = {};
-        if(email === '') {
+        if (email === '') {
             error.email = "Enter email";
-            isError = true;    
+            isError = true;
         }
-        if(email && !validEmail(email)) { 
+        if (email && !validEmail(email)) {
             error.email = "Enter valid email";
-            isError = true;  
-         }
-
-        if(password === '') {
-            error.password = "Enter Password";
-            isError = true;    
+            isError = true;
         }
-        
 
+        if (password === '') {
+            error.password = "Enter Password";
+            isError = true;
+        }
 
         setErrorMsgr(error);
-        console.log("isError",isError)
+        console.log("isError", isError)
         return isError
     }
 
     const Submit = () => {
 
-        
-       getById("tax-saving-plan","WdaCku41hRAEbupMtI0I").then((item)=>{
-     console.log(item.data()) ;
-    
-      })
-      if(!checkValidation()) {
+        getById("tax-saving-plan", "WdaCku41hRAEbupMtI0I").then((item) => {
+            console.log(item.data());
 
-          firebase
-              .auth()
-              .signInWithEmailAndPassword(email, password)
-              .then((response) => {
-                  const uid = response.user.uid
-                  
-                  const usersRef = firebase.firestore().collection('users')
-                  usersRef
-                      .doc(uid)
-                      .get()
-                      .then(firestoreDocument => {
-                          console.log("firestoreDocument",firestoreDocument)
-                          if (!firestoreDocument.exists) {
-                              alert("User does not exist anymore.")
-                              return;
-                          }
-                          const user = firestoreDocument.data()
-                          navigation.navigate('Home', {user})
-                      })
-                      .catch(error => {
-                          alert(error)
-                      });
-              })
-              .catch(error => {
-                  alert(error)
-              })
-      }
-      
+        })
+        if (!checkValidation()) {
 
+            firebase
+                .auth()
+                .signInWithEmailAndPassword(email, password)
+                .then((response) => {
+                    const uid = response.user.uid
+
+                    const usersRef = firebase.firestore().collection('users')
+                    usersRef
+                        .doc(uid)
+                        .get()
+                        .then(firestoreDocument => {
+                            console.log("firestoreDocument", firestoreDocument)
+                            if (!firestoreDocument.exists) {
+                                alert("User does not exist anymore.")
+                                return;
+                            }
+                            const user = firestoreDocument.data()
+                            Alert.alert("Login Successfully");
+                            navigation.navigate('Home', { user })
+                        })
+                        .catch(error => {
+                            alert(error)
+                        });
+                })
+                .catch(error => {
+                    alert(error)
+                })     
+        }
     }
 
     return (
-
         <View style={styles.maincontainer}>
-            <Text style={styles.mainheader}> Login Form </Text>
-
-            <View>
-                <Text style={styles.lables}>
+            <View >
+            <Image source={require('../assets/images/login.png')} style={{ width: 45, height: 45, margin: "auto", justifyContent: "center", alignItems: "center", alignContent: "center",marginLeft:"42%" }} />
+                <Text style={styles.mainheader}> Login </Text>  
+            </View>
+            <View >
+                <Text style={{marginTop:10}}>
                     Email
                 </Text>
                 <TextInput style={styles.inputStyle}
@@ -91,11 +88,11 @@ const Login = ({ navigation }) => {
                     autoCorrect={false}
                     keyboardType="default"
                 />
-                 <Text style={styles.errorMsg}>{errorMsg && errorMsg.email   && errorMsg.email      }</Text>
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.email && errorMsg.email}</Text>
             </View>
 
-            <View>
-                <Text style={styles.lables}>
+            <View >
+                <Text style={{marginTop:10,}}>
                     Password
                 </Text>
                 <TextInput style={styles.inputStyle}
@@ -107,7 +104,7 @@ const Login = ({ navigation }) => {
                     secureTextEntry={true}
                     keyboardType="default"
                 />
-                 <Text style={styles.errorMsg}>{errorMsg && errorMsg.password && errorMsg.password  }</Text>
+                <Text style={styles.errorMsg}>{errorMsg && errorMsg.password && errorMsg.password}</Text>
             </View>
 
             <View>
@@ -116,8 +113,8 @@ const Login = ({ navigation }) => {
                     onPress={() => Submit()}
                 >
 
-                    <Text style={styles.buttonText}>Login</Text>
-                </TouchableOpacity> 
+                    <Text style={styles.buttonText}>SignIn</Text>
+                </TouchableOpacity>
                 <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => navigation.push("Register")}
                 >
@@ -129,11 +126,8 @@ const Login = ({ navigation }) => {
                     <Text style={{ color: "blue" }}>Forgot Password?</Text>
                 </TouchableOpacity> */}
 
-
             </View>
         </View>
-
-
 
     );
 };
@@ -146,23 +140,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     mainheader: {
-        paddingTop: 40,
+        paddingTop: 10,
         fontSize: 30,
+        fontWeight: "bold",
         color: "#000000",
-       
-    },
-    lables: {
-        height: 40,
-        paddingTop: 15,
-
-        color: "#000000",
-
+        marginLeft: "36%",
     },
     inputStyle: {
-        padding: 5,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#0010a1",
+        padding:5,
+        marginTop:10
     },
 
     buttonStyle: {
@@ -174,8 +163,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 15,
-
-
     },
     buttonStyle1: {
         borderRadius: 5,
@@ -185,8 +172,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginTop: 15,
-
-
     },
     buttonText: {
         color: "#ffffff",
@@ -198,8 +183,8 @@ const styles = StyleSheet.create({
         marginLeft: "65%",
         color: "#0010a1",
     },
-    errorMsg : {
-        color:"red"
+    errorMsg: {
+        color: "red"
     }
 });
 export default Login;

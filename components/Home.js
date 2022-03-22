@@ -5,7 +5,7 @@ const Home = ({navigation}) => {
     const [name, setName] = useState('');
 
     const getData=() =>{
-        const uid = localStorage.getItem("user_id");
+        const uid = "CVu2SGMWD7PyN4Ohx5E4DVYPHFa2";
         const usersRef = firebase.firestore().collection('users')
         usersRef
             .doc(uid)
@@ -35,9 +35,9 @@ const Home = ({navigation}) => {
         <ScrollView>
             <View style={styles.viewtop}>
                 <Image source={require('../assets/images/pc-logo.jpg')} style={{  borderRadius: 50, borderColor: "#00f0d4", borderWidth: 2,  width: 35,  height: 35,margin: 10, }} />
-                <TouchableOpacity>
+                {/* <TouchableOpacity>
                     <Image source={require('../assets/images/bell-icon.png')}style={{ width:30,height:30, position: 'absolute',top: 10, bottom: 0, left: 300, right: 0,}}/>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity onPress={() =>navigation.navigate("Profile")}>
                     <Image source={require('../assets/images/profile.png')}style={{width:30,height:30,position: 'absolute',top: 10, bottom: 0, left: 260, right: 0, }}/>
@@ -53,31 +53,31 @@ const Home = ({navigation}) => {
                     <Text style={{ fontSize: 20, color: "#0600b5", marginLeft: 10 }}>Complete your {'\n'} proposal form</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={{ margin: 10 }}>Select a Product ---</Text>
+            {/* <Text style={{ margin: 10 }}>Select a Product ---</Text> */}
             <View style={{ alignItems: "center", justifyContent: "center" }}>
                 <View style={styles.homeView1}>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("TermInsurance")}>
                             <Image source={require('../assets/images/term-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Term Life {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold",fontWeight:"bold"}}>Term Life {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
-                        <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("Healthinsurance")}>
+                        <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("healthinsurance")}>
                             <Image source={require('../assets/images/health-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Health {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Health {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("CarInsurance")}>
                             <Image source={require('../assets/images/car-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Car {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Car {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("BikeInsurance")}>
                             <Image source={require('../assets/images/bike-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Bike {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Bike {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -86,25 +86,25 @@ const Home = ({navigation}) => {
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 8, }}onPress={() =>navigation.navigate("InvestmentPlans")}>
                             <Image source={require('../assets/images/investement-plans.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Investement {'\n'} Plans</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Investement {'\n'} Plans</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("Homeinsurance")}>
                             <Image source={require('../assets/images/home-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Home {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Home {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 6, }}onPress={() =>navigation.navigate("ChildSavingPlans")}>
                             <Image source={require('../assets/images/child-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Child Saving{'\n'} Plans</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Child Saving{'\n'} Plans</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 12, }}onPress={() =>navigation.navigate("TravelInsurance")}>
                             <Image source={require('../assets/images/travel-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Travel {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Travel {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -113,25 +113,25 @@ const Home = ({navigation}) => {
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 6, }}onPress={() =>navigation.navigate("Familyinsurance")}>
                             <Image source={require('../assets/images/family-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Family Health {'\n'} Insurance</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Family Health {'\n'} Insurance</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 8, }}onPress={() =>navigation.navigate("RetirementPlans")}>
                             <Image source={require('../assets/images/retirement-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Retirement {'\n'} Plans</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Retirement {'\n'} Plans</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 8, }}onPress={() =>navigation.navigate("GuaranteedReturns")}>
                             <Image source={require('../assets/images/claim-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Guaranteed {'\n'} returns</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Guaranteed {'\n'} returns</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.viewitem}>
                         <TouchableOpacity style={{ padding: 6, paddingBottom: 20 }}onPress={() =>navigation.navigate("TaxSavingInvestement")}>
                             <Image source={require('../assets/images/claim-insurance.png')} style={{ width: 20, height: 20, borderRadius: 1, borderColor: "#e8e8e8", backgroundColor: "#f5f5f5" }} />
-                            <Text style={{ fontSize: 10 }}>Tax Saving {'\n'} Investement</Text>
+                            <Text style={{ fontSize: 10 ,fontWeight:"bold"}}>Tax Saving {'\n'} Investement</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

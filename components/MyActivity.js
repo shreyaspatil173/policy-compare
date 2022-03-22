@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import { getTaxSavingPlans,getById } from "../Firebase/services";
 import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar, ScrollView, Image, TouchableOpacity ,Picker} from "react-native";
+import { Alert } from "react-native-web";
 
 const MyActivity = ({route,navigation}) => {
   const {insuranceid} = route.params ?? "";
@@ -12,14 +13,12 @@ const MyActivity = ({route,navigation}) => {
     getById("json-display",insuranceid).then((item)=>{
       console.log(item.data()) ;
      setData(item.data())
-       })
-
-    
+       })    
     
   },[]);
-  const Submit = ()=>{
-
-    
+  const CallBack = ()=>{
+Alert.alert("We Will contact you");
+// navigation.navigate("Home");
   }
   return (
     <SafeAreaView>
@@ -121,7 +120,7 @@ const MyActivity = ({route,navigation}) => {
           <Text style={{ fontWeight: "bold", marginLeft: 20, backgroundColor: "#b5b5b5", borderRadius: 5, marginRight: 20, textAlign: "center" }}>24hr Claim Statement</Text>
         </View>
 
-        <View>
+        <View style={{paddingLeft:5}}>
           <View style={{ flexDirection: "row", flexWrap: "wrap", margin: 20, backgroundColor: "#fcfcfc", borderRadius: 10, }}>
             <Image source={require('../assets/images/reliance.png')} style={{ width: 100, height: 20, marginTop: 20, marginLeft: 10 }} />
             <Text style={{ textAlign: "center", alignContent: "center", marginLeft: "10%", marginTop: 20 }}>
@@ -234,7 +233,8 @@ const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: "#e64027",
     borderRadius: 5,
-    margin: "auto",
+    margin: 10,
+
     
     justifyContent: "center",
     alignItems: "center",
@@ -244,7 +244,9 @@ const styles = StyleSheet.create({
   buttonStyle1: {
     backgroundColor: "#0313fc",
     borderRadius: 5,
-    margin: "auto",
+    margin: "10",
+    
+    
    
     justifyContent: "center",
     alignItems: "center",
@@ -252,11 +254,13 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#ffffff",
-    fontSize: 14,
+    fontSize: 8,
+    padding: 5
   },
   buttonText1: {
     color: "#ffffff",
-    fontSize: 14,
+    fontSize: 8,
+    padding:5
 
   },
 });

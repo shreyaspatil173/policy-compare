@@ -1,13 +1,39 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity,SafeAreaView ,ScrollView,TextInput,Picker} from "react-native";
-import CheckBoxes from "./CheckBoxes";
-import {setFamilyInsurance } from "../Firebase/services"
+import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, ScrollView, TextInput, Picker } from "react-native";
+import { setFamilyInsurance } from "../Firebase/services"
+import { firebase } from "../Firebase/firebase-config";
+import SwitchCode1 from "./SwitchCode1";
 
-const FamilyInsurances = ({navigation})=>{
+const FamilyInsurances = ({ navigation }) => {
     const [selectedValue, setSelectedValue] = useState("");
     const [age, setAge] = useState('');
     const [shouldShow, setShouldShow] = useState(true);
     const [errorMsg, setErrorMsgr] = useState({});
+    const [name, setName] = useState('');
+
+    const getData = () => {
+        const uid = "CVu2SGMWD7PyN4Ohx5E4DVYPHFa2";
+        const usersRef = firebase.firestore().collection('users')
+        usersRef
+            .doc(uid)
+            .get()
+            .then(firestoreDocument => {
+                if (!firestoreDocument.exists) {
+                    alert("User does not exist anymore.")
+                    return;
+                }
+                const user = firestoreDocument.data()
+                console.log("user", user)
+                setName(user.fullName)
+
+            })
+            .catch(error => {
+                alert(error)
+            });
+    }
+    React.useEffect(() => {
+        getData()
+    }, [])
 
     const checkValidation = () => {
         let isError = false;
@@ -22,7 +48,7 @@ const FamilyInsurances = ({navigation})=>{
             isError = true;
         }
 
-      
+
 
         setErrorMsgr(error);
         console.log("isError", isError)
@@ -30,37 +56,37 @@ const FamilyInsurances = ({navigation})=>{
     }
     const Submit = () => {
         if (!checkValidation()) {
-        if(selectedValue && age && shouldShow){
-            
-            setFamilyInsurance({
-                city:selectedValue,
-                age:age,
-                insure:shouldShow
-            });
-            navigation.navigate('Activity', {
-                insuranceid: 'family-insurance',
+            if (selectedValue && age && shouldShow) {
 
-            });
-        }else{
-            console.log('slecte all')
+                setFamilyInsurance({
+                    city: selectedValue,
+                    age: age,
+                    insure: shouldShow
+                });
+                navigation.navigate('Activity', {
+                    insuranceid: 'family-insurance',
+
+                });
+            } else {
+                console.log('slecte all')
+            }
         }
-    }
-        
+
 
     }
 
-return(
-    <SafeAreaView>
+    return (
+
         <ScrollView>
-        <View>
-                <Text style={{ fontSize: 20, margin: 15, fontWeight: "bold", }}>Hey, Shreyas Pramod Patil {"\n"} Let's find the right {"\n"}Family isurance for Your </Text>
-                <Text style={{ fontSize: 15, margin: 15 }}>Who would you like to insure? </Text>
-            <CheckBoxes/>
-        </View>
-       
-        <View>
-            <Text style={{ fontSize: 15, margin: 15 ,fontWeight: "bold",}}>How old is each member? </Text>
-            <Text style={styles.lables}>
+            <SwitchCode1 />
+            <View>
+                <Text style={{ fontSize: 20, margin: 15, fontWeight: "bold", }}>Hey, {name}{"\n"} Let's Find The Right {"\n"}Family Insurance </Text>
+
+            </View>
+
+            <View>
+                <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>How Old Is Each Member? </Text>
+                <Text style={styles.lables}>
                     Your Age
                 </Text>
                 <TextInput style={styles.inputStyle}
@@ -75,49 +101,48 @@ return(
             </View>
 
             <View>
-            <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>Where do you live?</Text>
-            <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>Slect Yor City</Text>
+                <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>Where Do You Live?</Text>
+                <Text style={{ fontSize: 15, margin: 15, fontWeight: "bold", }}>Select Your  City</Text>
 
-            <Picker
+                <Picker
                     selectedValue={selectedValue}
-                    style={{ height: 30, width: 140,  }}
+                    style={{ height: 30, width: 140, marginLeft: 10 }}
                     onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                 >
-                     <Picker.Item label="Select Value"  />
+                    <Picker.Item label="Select Value" />
                     <Picker.Item label="Mumbai" value="Mumbai" />
-                    <Picker.Item label="New Mumbai" value="New Mumbai"/>
+                    <Picker.Item label="New Mumbai" value="New Mumbai" />
                     <Picker.Item label="Delhi" value="Delhi" />
-                    <Picker.Item label="New Delhi" value="New Delhi "/>
+                    <Picker.Item label="New Delhi" value="New Delhi " />
                     <Picker.Item label="Pune" value="Pune" />
-                    <Picker.Item label="Nashik" value="Nashik"/>
+                    <Picker.Item label="Nashik" value="Nashik" />
                     <Picker.Item label="Thane" value="Thane" />
-                    <Picker.Item label="Kolkata" value="Kollata"/>
-                    <Picker.Item label="Surat" value="Surat"/>
-                    <Picker.Item label="Indore" value="Indore"/>
+                    <Picker.Item label="Kolkata" value="Kollata" />
+                    <Picker.Item label="Surat" value="Surat" />
+                    <Picker.Item label="Indore" value="Indore" />
                 </Picker>
                 <Text style={styles.errorMsg}>{errorMsg && errorMsg.selectedValue && errorMsg.selectedValue}</Text>
             </View>
 
             <TouchableOpacity style={styles.buttonStyle}
-                     onPress={() => Submit()}
-                >
-                    <Text style={styles.buttonText}>Continue</Text>
-                </TouchableOpacity>
+                onPress={() => Submit()}
+            >
+                <Text style={styles.buttonText}>View Free Quotes</Text>
+            </TouchableOpacity>
         </ScrollView>
-    </SafeAreaView>
-)
+
+    )
 }
 
 const styles = StyleSheet.create({
     buttonStyle: {
         backgroundColor: "#000000",
         borderRadius: 5,
-        margin: "auto",
-        paddingTop: 5,
-        paddingBottom: 5,
+       margin:10,
+       padding:10,
         justifyContent: "center",
         alignItems: "center",
-        marginTop: 15,
+        
     },
     buttonText: {
         color: "#ffffff",
@@ -127,6 +152,7 @@ const styles = StyleSheet.create({
         height: 40,
         paddingTop: 15,
         color: "#000000",
+        marginLeft: 10
 
     },
     inputStyle: {
@@ -134,6 +160,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#0010a1",
+        margin: 10,
     },
     errorMsg: {
         color: "red",

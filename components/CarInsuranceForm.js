@@ -42,9 +42,9 @@ const CarInsuranceForm = ({ navigation }) => {
         <SafeAreaView>
             <ScrollView>
                 <Text style={{ margin: 15, fontSize: 30 }}>
-                    <Text style={{ color: "#0a00f7" }}>Save upto {'\n'}</Text>85% on car insurance <Text style={{ color: "#0a00f7" }}> </Text>
+                    <Text style={{ color: "#0a00f7" }}>Save Upto {'\n'}</Text>85% On Car Insurance <Text style={{ color: "#0a00f7" }}> </Text>
                 </Text>
-                <Text style={{ margin: 15 }}>Stay home & renew in 2 minutes ---</Text>
+                <Text style={{ margin: 15 }}>Stay Home & Renew In 2 Minutes ---</Text>
                 <TextInput style={styles.inputStyle}
                     placeholder="Enter Car Number(eg DL10AB1234)"
                     value={number}
@@ -57,7 +57,7 @@ const CarInsuranceForm = ({ navigation }) => {
                 <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => Submit()}
                 >
-                    <Text style={styles.buttonText}>View free quotes</Text>
+                    <Text style={styles.buttonText}>View Free Quotes</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>

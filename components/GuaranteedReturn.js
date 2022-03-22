@@ -66,7 +66,7 @@ const GuaranteedReturn = ({navigation}) => {
 
                 <Picker
                     selectedValue={selectedValue}
-                    style={{ height: 30, width: 140, marginLeft: 15, marginTop: 10 }}
+                    style={{ height: 30, width: 140, marginLeft: 10, marginTop: 10 }}
                     onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
                 >
                     <Picker.Item label="Select Value" />
@@ -89,7 +89,7 @@ const GuaranteedReturn = ({navigation}) => {
                     <TouchableOpacity style={styles.buttonStyle}
                         onPress={() => Submit()}
                     >
-                        <Text style={styles.buttonText}>View free quotes</Text>
+                        <Text style={styles.buttonText}>View Free Quotes</Text>
                     </TouchableOpacity>
                 </View>
                 <SwitchCode />
@@ -104,19 +104,20 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         margin: 10,
     },
-    viewField: {
-        margin: 15,
-    },
+   
     lables: {
         height: 40,
         paddingTop: 15,
         color: "#000000",
+        marginLeft:10
     },
+    
     inputStyle: {
         padding: 5,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#0010a1",
+        margin:10
     },
     buttonStyle: {
         backgroundColor: "#000000",

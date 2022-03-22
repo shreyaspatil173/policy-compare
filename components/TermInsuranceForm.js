@@ -95,6 +95,7 @@ const TermInsuranceForm = ({navigation}) => {
                     Enter Your Name
                 </Text>
                 <TextInput style={styles.inputStyle}
+                    placeholder="Enter Your Name"
                     value={name}
                     onChangeText={(actualData) => setName(actualData)}
                     autoCapitalize="none"
@@ -106,6 +107,7 @@ const TermInsuranceForm = ({navigation}) => {
                     Date of Birth (DD-MM-YYYY)
                 </Text>
                 <TextInput style={styles.inputStyle}
+                    placeholder="(DD-MM-YYYY)"
                     value={dob}
                     onChangeText={(actualData) => setDob(actualData)}
                     autoCapitalize="none"

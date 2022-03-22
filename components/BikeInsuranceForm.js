@@ -16,7 +16,6 @@ const BikeInsuranceForm = ({ navigation }) => {
             isError = true;    
         }
         
-
         setErrorMsgr(error);
         console.log("isError",isError)
         return isError
@@ -40,7 +39,7 @@ const BikeInsuranceForm = ({ navigation }) => {
         <SafeAreaView>
             <ScrollView>
                 <Text style={{ margin: 15, fontSize: 30 }}>
-                    <Text style={{ color: "#0a00f7" }}>Save upto {'\n'}</Text>85% on Bike insurance <Text style={{ color: "#0a00f7" }}> </Text>
+                    <Text style={{ color: "#0a00f7" }}>Save upto {'\n'}</Text>85% On Bike Insurance <Text style={{ color: "#0a00f7" }}> </Text>
                 </Text>
                 <View style={styles.viewRow}>
                     <View style={{ backgroundColor: "#daffd4", borderRadius: 10, padding: 8, margin: 4, flexDirection: "row", flexWrap: "wrap" }}>
@@ -52,7 +51,7 @@ const BikeInsuranceForm = ({ navigation }) => {
                         <Text style={{ fontSize: 20, color: "#f7abf0", marginLeft: 10 }}> Best Prices</Text>
                     </View>
                 </View>
-                <Text style={{ margin: 15 }}>Stay home & renew in 2 minutes ---</Text>
+                <Text style={{ margin: 15 }}>Stay Home & Renew In 2 Minutes ---</Text>
                 <TextInput style={styles.inputStyle}
                     placeholder="Enter Bike Number(eg DL-1S-AB-1234)"
                     value={number}
@@ -65,12 +64,11 @@ const BikeInsuranceForm = ({ navigation }) => {
                 <TouchableOpacity style={styles.buttonStyle}
                     onPress={() => Submit()}
                 >
-                    <Text style={styles.buttonText}>View free quotes</Text>
+                    <Text style={styles.buttonText}>View Free Quotes</Text>
                 </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     )
-
 }
 
 const styles = StyleSheet.create({

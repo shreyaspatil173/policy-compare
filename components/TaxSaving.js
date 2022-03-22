@@ -48,7 +48,7 @@ const TaxSaving = ({navigation}) => {
         <SafeAreaView>
             <ScrollView>
                 <View>
-                    <Text style={{ margin: 10, fontSize: 20 }}>Save upto ₹46,800 in tax </Text>
+                    <Text style={{ margin: 10, fontSize: 20,color:"#0010a1" }}>Save upto ₹46,800 in tax </Text>
                     <Text style={{ margin: 10, }}>under 80c and 10(10D)</Text>
 
                     <View style={styles.viewRow}>
@@ -106,12 +106,15 @@ const styles = StyleSheet.create({
         height: 40,
         paddingTop: 15,
         color: "#000000",
+        marginLeft:10
     },
+    
     inputStyle: {
         padding: 5,
         borderWidth: 1,
         borderRadius: 5,
         borderColor: "#0010a1",
+        margin:10
     },
     buttonStyle: {
         backgroundColor: "#000000",
